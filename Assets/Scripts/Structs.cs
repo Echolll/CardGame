@@ -33,6 +33,7 @@ namespace Cards
 		[NonSerialized]
 		public ushort Cost;
 		public string Name;
+		public string Description;
 		[Width(50)]
 		public Texture Texture;
 		[Width(40)]

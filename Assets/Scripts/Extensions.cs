@@ -11,7 +11,7 @@ namespace Cards
 {
     public static class CardUtility
     {
-        private const string c_ConfigPath = "//Cards//Resources//CommonCardDescription.xml";
+        private const string c_ConfigPath = "//Resources//CommonCardDescription.xml";
 
         private static readonly Dictionary<uint, string> _descriptions = new Dictionary<uint, string>();
         private static readonly List<uint> _uncollectibleIds = new List<uint>();

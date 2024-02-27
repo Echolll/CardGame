@@ -19,4 +19,10 @@ namespace Cards
 		Mage = 1,
 		Warrior = 2
 	}
+
+	public enum StepType : byte
+	{
+		FirstPlayer = 0,
+		SecondPlayer = 1
+	}
 }
