@@ -7,16 +7,6 @@ public class ChangeSideButtonScript : MonoBehaviour
 {
     [Inject]private GameManager gameManager;
 
-    public void OnPointerEnter()
-    {
-        Debug.Log("Навёл");
-    }
-
-    public void OnPointerExit()
-    {
-        Debug.Log("Убрал");
-    }
-
     public void OnPointerClick()
     {
         gameManager.ChangeStepPlayer();

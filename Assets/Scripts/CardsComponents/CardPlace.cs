@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class CardPlace : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool _placeAvalible = true;
 
-    // Update is called once per frame
-    void Update()
+    private void ChangeAvalible(bool avalible)
     {
-        
+        _placeAvalible = avalible;
     }
 }

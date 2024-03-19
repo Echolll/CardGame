@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -7,24 +6,13 @@ public class DeckGenerationInstaller : MonoInstaller
     [SerializeField] private Player _playerOne;
     [SerializeField] private Player _playerTwo;
 
-    private Player _currectPlayer;
+    [SerializeField] private GameObject _cardPrefab;
 
     public override void InstallBindings()
     {
-        _currectPlayer = _playerOne;
-        Container.Bind<Player>().FromInstance(_currectPlayer);      
-        Container.Bind<DeckGenerationInstaller>().FromComponentInHierarchy().AsSingle();     
-    }
-    
-    public void PlayerReBind()
-    {
-        _currectPlayer = _playerTwo;
-        Container.Rebind<Player>().FromInstance(_currectPlayer);
-        Debug.Log("Привязка изменилась");
-    }
+        Container.Bind<Player>().WithId("Player1").FromInstance(_playerOne).AsCached();
+        Container.Bind<Player>().WithId("Player2").FromInstance(_playerTwo).AsCached();
 
-    public Player GetCurrentPlayer()
-    {
-        return _currectPlayer;
+        Container.BindFactory<Player, CardPlayerService, CardPlayerService.Factory>().FromComponentInNewPrefab(_cardPrefab);       
     }
 }

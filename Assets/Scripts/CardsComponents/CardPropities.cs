@@ -1,11 +1,10 @@
 using Cards;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+
 public class CardPropities : MonoBehaviour
-{
+{  
     [Header("ќсновные параметры карты:")]
     [Range(0, 10)] public int _cardCost;
     public int _cardDamage;
@@ -30,7 +29,6 @@ public class CardPropities : MonoBehaviour
 
     [Space, Header("—ыллка на аниматор:")]
     [SerializeField] private CardAnimationController _cardAnim;
-
 
     public void OnUpdateCardData(CardPropertiesData cardData)
     {
@@ -57,6 +55,7 @@ public class CardPropities : MonoBehaviour
 
         Material mat = _material.material;
         mat.mainTexture = _cardTexture;
-    }
+    }  
 }
 
+    

@@ -12,22 +12,15 @@ public class DeckGeneration : MonoBehaviour
 {
     [Header("ќсновные настройки:")]
     [SerializeField,Range(1,30)] private int _cardIssuance;   
-    [SerializeField] private GameObject _card;
-
-    [Header("—сыллки 1-го игрока:")]
-    [SerializeField] private CardPackConfiguration _firstPlayerConfigCardData;
-    [SerializeField] private Transform _firstPlayerTransform;
-
-    [Header("—сыллки 2-го игрока:")]
-    [SerializeField] private CardPackConfiguration _secondPlayerConfigCardData;
-    [SerializeField] private Transform _secondPlayerTransform;
-
+   
     [Header("ƒебаг листа на наличие данных:")]
-    [SerializeField, OneLine(Header = LineHeader.Short)]
+    [SerializeField,OneLine(Header = LineHeader.Short)]
     private List<CardPropertiesData> _cardsData ;
     
-    [Inject] private Player _player;
-    [Inject] private DeckGenerationInstaller _installer;
+    [Inject(Id = "Player1")]private Player _playerFirst;
+    [Inject(Id = "Player2")]private Player _playerSecond;
+    [Inject]private CardPlayerService.Factory _cardFactory;
+   
 
     private void Awake()
     {
@@ -36,24 +29,25 @@ public class DeckGeneration : MonoBehaviour
 
     private void OnCardIssuance()
     {
-        _cardsData = _firstPlayerConfigCardData.UnionProperties(_cardsData).ToList();
-        CardsGeneration(_firstPlayerTransform);
+        _cardsData = _playerFirst.CardPack.UnionProperties(_cardsData).ToList();
+        CardsGeneration(_playerFirst.Transform, _playerFirst);
         _cardsData.Clear();
-        _cardsData = _secondPlayerConfigCardData.UnionProperties(_cardsData).ToList();
-        _installer.PlayerReBind();
-        _player = _installer.GetCurrentPlayer();
-        CardsGeneration(_secondPlayerTransform);
+        _cardsData = _playerSecond.CardPack.UnionProperties(_cardsData).ToList();
+        CardsGeneration(_playerSecond.Transform, _playerSecond);
     }
 
-    private void CardsGeneration(Transform cardPosition)
+    private void CardsGeneration(Transform cardPosition, Player _currectPlayer)
     {
-        for (int i = 0; i < _cardIssuance; i++)
+        for(int i = 0; i< _cardIssuance ; i++) 
         {
-            var cardObj = Instantiate(_card, cardPosition.position, Quaternion.identity);
-            cardObj.transform.SetParent(cardPosition.transform, true);
-            var obj = cardObj.GetComponent<CardPropities>();
-            obj.OnUpdateCardData(_cardsData[i]);
-            _player.AddCard(cardObj);
+            CardPlayerService newCard = _cardFactory.Create(_currectPlayer);
+            var obj = newCard.gameObject;
+            obj.tag = _currectPlayer.gameObject.tag;
+            obj.transform.SetParent(cardPosition);
+            obj.transform.SetPositionAndRotation(cardPosition.transform.position + new Vector3(0,i,0), cardPosition.transform.rotation);
+            var propities = obj.GetComponent<CardPropities>();
+            propities.OnUpdateCardData(_cardsData[i]);
+            _currectPlayer.AddCard(newCard.gameObject);
         }
     }
 }

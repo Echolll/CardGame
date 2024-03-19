@@ -11,11 +11,17 @@ public class CardAnimationController : MonoBehaviour
         _cardAnim = GetComponent<Animator>();
     }
 
-    public void OnHideOrShowCard(bool cardBool)
+    public void PutCardAnimation(int animStatus)
     {
         _cardAnim.enabled = true;
-        _cardAnim.SetBool("hide_card", cardBool);
+        _cardAnim.SetInteger("card_animation_status", animStatus);
     }   
+
+    public void HideOrShowCard(string name)
+    {
+        _cardAnim.enabled = true;
+        _cardAnim.SetTrigger(name);
+    }
 
     public void OnAnimatorDisable()
     {

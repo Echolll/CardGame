@@ -1,34 +1,45 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
-public static class SelectStarterCards
+public class SelectStarterCards : MonoBehaviour
 {
-    public static void OnShowCard(List<GameObject> _playerCards, List<Transform> _cardPlaces)
-    {
-        List<int> userNumb = new List<int>();
+    [SerializeField] private List<Transform> _cardPlaces;
+    [SerializeField] private List<GameObject> _cards;
+    
+    [Inject] UIPanelAnimationController _panelAnimator;
 
-        GetRandomNumber(_playerCards.Capacity ,userNumb, _cardPlaces.Capacity);
+    public void OnShowCard(List<GameObject> _playerCards)
+    {
+        List<int> _randNumb = new List<int>();
+      
+        GetRandomNumber(_randNumb, _playerCards.Count, _cardPlaces.Count);
 
         for (int i = 0; i < _cardPlaces.Capacity; i++)
-         {
-            _playerCards[userNumb[i]].transform.position = _cardPlaces[i].transform.position;
-            _playerCards[userNumb[i]].transform.rotation = _cardPlaces[i].transform.rotation;
-         } 
+        {
+            _cards.Add(_playerCards[_randNumb[i]]);
+            _playerCards[_randNumb[i]].transform.SetParent(_cardPlaces[i]);
+            _playerCards[_randNumb[i]].transform.position = _cardPlaces[i].transform.position;
+            _playerCards[_randNumb[i]].transform.rotation = _cardPlaces[i].transform.rotation;
+            _playerCards[_randNumb[i]].gameObject.AddComponent<StartedEventTrigger>();
+            _playerCards[_randNumb[i]].GetComponent<StartedEventTrigger>().UIPanelAnimationController(_panelAnimator);
+            _playerCards[_randNumb[i]].GetComponent<StartedEventTrigger>().SelectStarterCards(this);
+        }
+
+        _panelAnimator.ChooseCardOnStart();
     }
 
-    private static void GetRandomNumber(int Capacity, List<int> numb , int _place)
+    private void GetRandomNumber(List<int> _randNumList, int _cardsCount, int _cardsPlaceCount)
     {
-        for (int i = 0; i < _place ; i++)
+        while (_randNumList.Count < _cardPlaces.Count)
         {
-            int randNum = Random.Range(0, Capacity);
-            if (!numb.Contains(randNum))
+            int randNum = Random.Range(0, _cardsPlaceCount);
+
+            if (!_randNumList.Contains(randNum))
             {
-                numb.Add(randNum);
+                _randNumList.Add(randNum);
             }
-        }
+        }       
     }
+   
 }
