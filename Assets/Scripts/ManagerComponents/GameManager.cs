@@ -91,9 +91,9 @@ public class GameManager : MonoBehaviour
         if(_camera.AnimationIsPlaying())    
         {           
             _currectPlayer.AddCardToHandAfterMove();
-            _currectPlayer.OnPutCardToHand();
-            _currectPlayer.ShowOrHideCard(true);
+            _currectPlayer.OnPutCardToHand();          
             _currectPlayer.RestoreManaPoint();
+            _currectPlayer.CardsCanAttack();
         }
     }
    

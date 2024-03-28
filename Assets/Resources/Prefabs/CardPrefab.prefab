@@ -1323,6 +1323,7 @@ GameObject:
   - component: {fileID: 5822491549634284597}
   - component: {fileID: -1124687072863203159}
   - component: {fileID: 5741678746575885655}
+  - component: {fileID: -6419159959448980607}
   m_Layer: 0
   m_Name: CardPrefab
   m_TagString: Untagged
@@ -1416,8 +1417,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 5, z: 1}
+  m_Center: {x: 0, y: -2, z: 0}
 --- !u!95 &-77584657591972891
 Animator:
   serializedVersion: 5
@@ -1466,6 +1467,7 @@ MonoBehaviour:
   _cardCost: 0
   _cardDamage: 0
   _cardHealth: 0
+  _cardAbility: 0
   _cardName: 
   _cardType: 
   _cardDescription: 
@@ -1513,5 +1515,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65446371ddbcf15439003b9d2c493b34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6419159959448980607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307249474124220039}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708fd2704ef0ba848a096988e21bf585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

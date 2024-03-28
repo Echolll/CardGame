@@ -1,14 +1,14 @@
 using Cards.ScriptableObjects;
+using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using Zenject;
 
 public class Player : MonoBehaviour
 {
     [Header("Обязательные настройки:")]
-    [SerializeField] private CardPackConfiguration _cardPack;
+    [SerializeField] public GameObjectCardPackConfiguration _cardPack;
     [SerializeField] private Transform _transform;
 
     [Header("Основные настройки:")]
@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [Header("Другое:")]
     [SerializeField] private List<GameObject> _cardsInStock;
     [SerializeField] private List<GameObject> _cardsInHand;
+    [SerializeField] private List<GameObject> _cardsOnTable;
 
     [SerializeField] private List<GameObject> _cardPlace;
     [SerializeField] private CardPlaceInHand[] _cardPlaceInHand;
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
         _color = GetComponent<ChangeColor>();
     }
 
-    public CardPackConfiguration CardPack
+    public GameObjectCardPackConfiguration CardPack
     {
         get { return _cardPack; }
     }
@@ -55,7 +56,18 @@ public class Player : MonoBehaviour
     {
         get { return _maxMagicPoints;}
     }
-   
+
+    public int Health
+    {
+        get { return _maxHealth; }
+        set { _maxHealth = value; }
+    }
+
+    public List<GameObject> CardsOnTable 
+    {
+        get { return _cardsOnTable; }
+    }
+  
     public int GetMagicPoints() => _magicPoints;
 
     public int GetCardsInHand() => _cardsInHand.Count;
@@ -63,6 +75,8 @@ public class Player : MonoBehaviour
     public void AddCard(GameObject card) => _cardsInStock.Add(card);
     
     public void AddCardToHand(GameObject card) => _cardsInHand.Add(card);
+
+    public void AddCardOnTable(GameObject card) => _cardsOnTable.Add(card);
 
     public void AddCardToHandAfterMove()
     {
@@ -90,7 +104,15 @@ public class Player : MonoBehaviour
             _cardsInHand.Remove(card);
         }
     }
-    
+
+    public void RemoveCardOnTable(GameObject card)
+    {
+        if(_cardsOnTable.Contains(card))
+        {
+            _cardsOnTable.Remove(card);
+        }
+    }
+
     public void SelectCardOnStart()
     {
         if(_isPlayed)
@@ -108,13 +130,39 @@ public class Player : MonoBehaviour
             {
                 if (_cardPlaceInHand[i].ThisPlaceAvalible())
                 {
-                    card.gameObject.transform.parent = null;
-                    card.gameObject.transform.position = _cardPlaceInHand[i].gameObject.transform.position;
+                    //card.gameObject.transform.parent = null;
+                    //card.gameObject.transform.position = _cardPlaceInHand[i].gameObject.transform.position;
                     //card.gameObject.transform.rotation = _cardPlaceInHand[i].gameObject.transform.rotation;
-                    card.gameObject.transform.parent = _cardPlaceInHand[i].gameObject.transform;
+                    //card.gameObject.transform.parent = _cardPlaceInHand[i].gameObject.transform;
+                    //card.gameObject.GetComponent<CardScaleTrigger>().enabled = true;
+
+                    StartCoroutine(MoveToPoint(card, _cardPlaceInHand[i].gameObject));
                 }
             }
         }
+    }
+
+    private IEnumerator MoveToPoint(GameObject _cardInHand, GameObject _placeInHand)
+    {
+        float _elapsedTime = 0f;
+        float _desiredDuration = 2f;
+
+        Vector3 _startPoint = _cardInHand.transform.position;
+
+        _cardInHand.gameObject.transform.parent = null;
+        _cardInHand.gameObject.transform.parent = _placeInHand.gameObject.transform;
+        _cardInHand.gameObject.transform.rotation = _placeInHand.gameObject.transform.rotation;
+
+        while (_elapsedTime < _desiredDuration)
+        {
+            _elapsedTime += Time.deltaTime;
+            float percentageComplete = _elapsedTime / _desiredDuration;
+            _cardInHand.transform.position = Vector3.Lerp(_startPoint, _placeInHand.transform.position, Mathf.SmoothStep(0, 1, percentageComplete));
+            yield return null;
+        }
+       
+        ShowOrHideCard(true);
+        _cardInHand.gameObject.GetComponent<CardScaleTrigger>().enabled = true;
     }
 
     public bool CheckCardsInHand()
@@ -173,5 +221,27 @@ public class Player : MonoBehaviour
         }
 
         _magicPoints = _maxMagicPoints;
+    }
+
+    public void UpdateHealthInfo()
+    {      
+        if(_maxHealth <= 0)
+        {
+            EditorApplication.isPaused = true;
+            Debug.Log($"{gameObject} - проиграл");
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log($"{_maxHealth} - здоровье игрока");
+        }
+    }
+
+    public void CardsCanAttack()
+    {
+        foreach(var card in _cardsOnTable)
+        {
+            card.GetComponent<CardFightEventTrigger>().CardCanAttack();
+        }
     }
 }

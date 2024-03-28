@@ -13,6 +13,6 @@ public class DeckGenerationInstaller : MonoInstaller
         Container.Bind<Player>().WithId("Player1").FromInstance(_playerOne).AsCached();
         Container.Bind<Player>().WithId("Player2").FromInstance(_playerTwo).AsCached();
 
-        Container.BindFactory<Player, CardPlayerService, CardPlayerService.Factory>().FromComponentInNewPrefab(_cardPrefab);       
+        Container.BindFactory<Player, Player, GameObject, CardPlayerService, CardPlayerService.Factory>().FromComponentInNewPrefab(_cardPrefab);  
     }
 }

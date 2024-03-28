@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class CardPlace : MonoBehaviour
 {
-    public bool _placeAvalible = true;
-
-    private void ChangeAvalible(bool avalible)
+    public bool PlaceAvalible()
     {
-        _placeAvalible = avalible;
+        if(transform.childCount == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

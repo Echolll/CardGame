@@ -11,18 +11,14 @@ public class CardEventTrigger : MonoBehaviour, IDragHandler , IEndDragHandler
 
     CardCost _cost;
 
+    Vector3 _defaultScale;
+
     private void OnEnable()
     {       
        _cost = GetComponent<CardCost>();
        _cardAnim = GetComponent<CardAnimationController>();
        _player = GetComponent<CardPlayerService>();
-       _currectPlayer = _player.CurrectPlayer();
-
-       // if (_currectPlayer != null)
-       // { 
-       //    Debug.Log($"{_currectPlayer} - у меня инъекция этого игрока"); 
-       // }
-
+       _currectPlayer = _player.CurrectPlayer();       
     }
 
     public Player GetPlayerComponent() => _currectPlayer;
@@ -33,7 +29,8 @@ public class CardEventTrigger : MonoBehaviour, IDragHandler , IEndDragHandler
         Vector3 screenPos = Input.mousePosition;
         screenPos.z = Camera.main.transform.position.y;         
         Vector3 newPos = Camera.main.ScreenToWorldPoint(screenPos);       
-        transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);
+        transform.position = new Vector3(newPos.x, transform.position.y, newPos.z);        
+        GetComponent<CardScaleTrigger>().enabled = false;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -47,8 +44,12 @@ public class CardEventTrigger : MonoBehaviour, IDragHandler , IEndDragHandler
             {
                 if (_cost.SpendPoints())
                 {
-                    transform.SetParent(hit.transform);
+                    transform.SetParent(hit.transform, true);
                     _cardAnim.PutCardAnimation(1);
+                    gameObject.AddComponent<CardFightEventTrigger>();
+                    GetComponent<CardScaleTrigger>().enabled = true;
+                    _currectPlayer.AddCardOnTable(gameObject);
+                    Destroy(this);
                 }
             }           
         }
@@ -60,6 +61,6 @@ public class CardEventTrigger : MonoBehaviour, IDragHandler , IEndDragHandler
 
         _currectPlayer.ShowCardOrHidePlaces(false);
     }
-
+ 
 }
     

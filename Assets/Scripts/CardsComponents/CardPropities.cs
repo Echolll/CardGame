@@ -9,6 +9,7 @@ public class CardPropities : MonoBehaviour
     [Range(0, 10)] public int _cardCost;
     public int _cardDamage;
     public int _cardHealth;
+    public CardAbility _cardAbility;
 
     [Space, Header("Наименование карты:")]
     public string _cardName;
@@ -30,6 +31,18 @@ public class CardPropities : MonoBehaviour
     [Space, Header("Сыллка на аниматор:")]
     [SerializeField] private CardAnimationController _cardAnim;
 
+    Player _currectPlayer;
+
+    private void OnEnable()
+    {
+        _currectPlayer = GetComponent<CardPlayerService>().CurrectPlayer();
+
+        _material.material.mainTexture = _cardTexture;
+
+        //Material mat = _material.material;
+        //mat.mainTexture = _cardTexture;
+    }
+   
     public void OnUpdateCardData(CardPropertiesData cardData)
     {
         _cardCost = cardData.Cost;
@@ -38,9 +51,10 @@ public class CardPropities : MonoBehaviour
         _cardName = cardData.Name;
         _cardTexture = cardData.Texture;
         _cardDescription = cardData.Description;
-        
-        gameObject.name = _cardName;
+        _cardType = cardData.Type.ToString();
+        _cardAbility = cardData.Ability;
 
+        gameObject.name = _cardName;
         OnUpdateUIData();
     }
 
@@ -50,12 +64,28 @@ public class CardPropities : MonoBehaviour
         _damage.text = _cardDamage.ToString();
         _health.text = _cardHealth.ToString();
         _name.text = _cardName.ToString();
-        //_type.text = _cardType.ToString();
         _description.text = _cardDescription.ToString();
+        _type.text = _cardType;
 
-        Material mat = _material.material;
-        mat.mainTexture = _cardTexture;
-    }  
+             
+    }
+    
+    public void UpdateHealthAfterAttack()
+    {
+        _health.text = _cardHealth.ToString();
+        if( _cardHealth <= 0)
+        {
+           Debug.Log($"Я {gameObject.name} уничтожен и удалён из списка у {_currectPlayer}!");
+           _currectPlayer.RemoveCardOnTable(gameObject);
+           Destroy(gameObject);
+        }   
+    }
+
+    public void UpdateDataHealthAndAttack()
+    {
+        _health.text = _cardHealth.ToString();
+        _damage.text = _cardDamage.ToString();
+    }
 }
 
     

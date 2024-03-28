@@ -32,9 +32,12 @@ namespace Cards
 		public uint Id;
 		[NonSerialized]
 		public ushort Cost;
-		public string Name;
+        [Width(150)]
+        public string Name;
 		public string Description;
-		[Width(50)]
+        [Width(100)]
+        public CardAbility Ability;
+		[Width(125)]
 		public Texture Texture;
 		[Width(40)]
 		public ushort Attack;

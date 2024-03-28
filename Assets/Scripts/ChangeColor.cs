@@ -22,7 +22,7 @@ public class ChangeColor : MonoBehaviour
             CardPlace card = cardPlaces[i].GetComponent<CardPlace>();
             MeshRenderer matPlace = cardPlaces[i].GetComponent<MeshRenderer>();
 
-            if (card._placeAvalible == true) 
+            if (card.PlaceAvalible()) 
             {
                matPlace.enabled = true;
                matPlace.material = material;

@@ -25,4 +25,13 @@ namespace Cards
 		FirstPlayer = 0,
 		SecondPlayer = 1
 	}
+
+	public enum CardAbility : byte
+	{
+		None = 0,
+		Taunt = 1,
+		BattleCry = 2,
+		PassiveBuff = 3,
+		Charge = 4
+	}
 }

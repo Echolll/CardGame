@@ -17,18 +17,24 @@ MonoBehaviour:
   _cards:
   - Id: 701
     Name: Core Hound
+    Description: 
+    Ability: 0
     Texture: {fileID: 2800000, guid: c14665de531b40646b061d4b83595145, type: 3}
     Attack: 9
     Health: 5
     Type: 2
   - Id: 702
     Name: Stormwind Champion
+    Description: Your other minions have +1/+1.
+    Ability: 3
     Texture: {fileID: 2800000, guid: 69fe9d69d1e8d194bbea49330e90af90, type: 3}
     Attack: 6
     Health: 6
     Type: 0
   - Id: 703
     Name: War Golem
+    Description: 
+    Ability: 0
     Texture: {fileID: 2800000, guid: df4e97a7b1f292b40b18dad56f8d434b, type: 3}
     Attack: 7
     Health: 7

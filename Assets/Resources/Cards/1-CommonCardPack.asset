@@ -18,6 +18,7 @@ MonoBehaviour:
   - Id: 101
     Name: Grimscale Oracle
     Description: Your other Murlocs have +1 Attack.
+    Ability: 3
     Texture: {fileID: 2800000, guid: 2640b12c48b40084d87c1205f15f28ad, type: 3}
     Attack: 1
     Health: 1
@@ -25,6 +26,7 @@ MonoBehaviour:
   - Id: 102
     Name: Elven Archer
     Description: 'Battlecry: Deal 1 damage.'
+    Ability: 2
     Texture: {fileID: 2800000, guid: 70dde54215b51254abe6a32218138450, type: 3}
     Attack: 1
     Health: 1
@@ -32,6 +34,7 @@ MonoBehaviour:
   - Id: 103
     Name: Goldshire Footman
     Description: Taunt
+    Ability: 1
     Texture: {fileID: 2800000, guid: 313701467bd41734d86736a100fc8197, type: 3}
     Attack: 1
     Health: 2
@@ -39,6 +42,7 @@ MonoBehaviour:
   - Id: 104
     Name: Stonetusk Boar
     Description: Charge
+    Ability: 4
     Texture: {fileID: 2800000, guid: e48680f7ea2550642820ae76d16e8d42, type: 3}
     Attack: 1
     Health: 1
@@ -46,6 +50,7 @@ MonoBehaviour:
   - Id: 105
     Name: Voodoo Doctor
     Description: 'Battlecry: Restore 2 Health.'
+    Ability: 2
     Texture: {fileID: 2800000, guid: 7e0b1f4c8463171409f543c0222c78bf, type: 3}
     Attack: 2
     Health: 1
@@ -53,6 +58,7 @@ MonoBehaviour:
   - Id: 106
     Name: Murloc Raider
     Description: 
+    Ability: 0
     Texture: {fileID: 2800000, guid: 2075075e332ee2d42afd9944f0865ca3, type: 3}
     Attack: 1
     Health: 1
@@ -60,6 +66,7 @@ MonoBehaviour:
   - Id: 107
     Name: Razorfen Hunter
     Description: 'Battlecry: Summon a 1/1 Boar.'
+    Ability: 2
     Texture: {fileID: 2800000, guid: 034ec5c518f3924469504a3855a273c4, type: 3}
     Attack: 1
     Health: 1
@@ -67,6 +74,7 @@ MonoBehaviour:
   - Id: 108
     Name: Mechanical Dragonling
     Description: 
+    Ability: 0
     Texture: {fileID: 2800000, guid: aa2e71adae60f064091f659f6240f2ac, type: 3}
     Attack: 2
     Health: 1
@@ -74,6 +82,7 @@ MonoBehaviour:
   - Id: 109
     Name: Murloc scout
     Description: 
+    Ability: 0
     Texture: {fileID: 2800000, guid: 2075075e332ee2d42afd9944f0865ca3, type: 3}
     Attack: 1
     Health: 1
