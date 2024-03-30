@@ -630,10 +630,10 @@ MonoBehaviour:
   _cardCost: 2
   _cardDamage: 2
   _cardHealth: 1
-  _cardAbility: 2
+  _cardAbility: 0
   _cardName: Murloc Tidehunter
   _cardType: Murloc
-  _cardDescription: 'Battlecry: Summon a 1/1 Murloc Scout.'
+  _cardDescription: 
   _cardTexture: {fileID: 2800000, guid: 05a446138e6dbe649809881e5b292286, type: 3}
   _cost: {fileID: 1227778981820104218}
   _damage: {fileID: 1344801361442225862}

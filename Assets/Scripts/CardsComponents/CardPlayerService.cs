@@ -5,8 +5,8 @@ using Zenject;
 
 public class CardPlayerService : MonoBehaviour
 {
-    [Inject]Player _currectPlayer;
-    [Inject]Player _enemyPlayer;
+    [Inject,SerializeField] Player _currectPlayer;
+    [Inject,SerializeField] Player _enemyPlayer;
 
     void Start()
     {
@@ -35,7 +35,7 @@ public class CardPlayerService : MonoBehaviour
     public class Factory : PlaceholderFactory<Player, Player, GameObject, CardPlayerService> 
     {
         public override CardPlayerService Create(Player currentPlayer, Player enemyPlayer, GameObject prefab)
-        {
+        {         
             CardPlayerService newCard = Instantiate(prefab).GetComponent<CardPlayerService>();
             newCard.Init(currentPlayer, enemyPlayer);
             return newCard;

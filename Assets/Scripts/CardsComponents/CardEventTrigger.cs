@@ -5,20 +5,17 @@ using UnityEngine.EventSystems;
 public class CardEventTrigger : MonoBehaviour, IDragHandler , IEndDragHandler
 {   
     CardAnimationController _cardAnim;
-
-    CardPlayerService _player;
     Player _currectPlayer;
-
     CardCost _cost;
 
     Vector3 _defaultScale;
 
+    
     private void OnEnable()
     {       
        _cost = GetComponent<CardCost>();
        _cardAnim = GetComponent<CardAnimationController>();
-       _player = GetComponent<CardPlayerService>();
-       _currectPlayer = _player.CurrectPlayer();       
+        _currectPlayer = GetComponent<CardPlayerService>().CurrectPlayer();      
     }
 
     public Player GetPlayerComponent() => _currectPlayer;

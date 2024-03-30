@@ -1469,7 +1469,7 @@ MonoBehaviour:
   _cardAbility: 2
   _cardName: Razorfen Hunter
   _cardType: Beast
-  _cardDescription: 'Battlecry: Summon a 1/1 Boar.'
+  _cardDescription: 
   _cardTexture: {fileID: 2800000, guid: 034ec5c518f3924469504a3855a273c4, type: 3}
   _cost: {fileID: 1405645170527704558}
   _damage: {fileID: 1582711640339664799}

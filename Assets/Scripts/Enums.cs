@@ -34,4 +34,19 @@ namespace Cards
 		PassiveBuff = 3,
 		Charge = 4
 	}
+
+    public enum ActionType : byte
+    {
+        Deal,
+        Restore,
+        Give,
+        Gain
+    }
+
+	public enum PassiveBuffType : byte
+	{
+		Self,	
+		Anybody
+	}
+
 }

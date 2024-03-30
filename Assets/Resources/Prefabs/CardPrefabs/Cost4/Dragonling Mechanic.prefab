@@ -998,10 +998,10 @@ MonoBehaviour:
   _cardCost: 4
   _cardDamage: 2
   _cardHealth: 4
-  _cardAbility: 2
+  _cardAbility: 0
   _cardName: Dragonling Mechanic
   _cardType: None
-  _cardDescription: 'Battlecry: Summon a 2/1 Mechanical Dragonling.'
+  _cardDescription: 
   _cardTexture: {fileID: 2800000, guid: 815334f1e8468564c9ccf7e0d54dba81, type: 3}
   _cost: {fileID: 894553951513093317}
   _damage: {fileID: 5327225951154500148}

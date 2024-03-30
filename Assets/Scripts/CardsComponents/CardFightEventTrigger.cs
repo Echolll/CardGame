@@ -9,8 +9,10 @@ public class CardFightEventTrigger : MonoBehaviour, IDragHandler, IEndDragHandle
 {
     CardPropities _cardPropities;
     Player _enemyPlayer;
+    Player _currectPlayer;
 
-    [SerializeField]bool _isReady = false;     
+    [SerializeField]bool _isReady = false;
+    [SerializeField]public bool _AttackResistance = false;
 
     private float _elapsedTime;
     private float _desiredDuration = 2f;
@@ -21,7 +23,9 @@ public class CardFightEventTrigger : MonoBehaviour, IDragHandler, IEndDragHandle
         _startPos = transform.position;
         _cardPropities = GetComponent<CardPropities>();
         _enemyPlayer = GetComponent<CardPlayerService>().EnemyPlayer();
+        _currectPlayer = GetComponent<CardPlayerService>().CurrectPlayer();
         AddMechanicComponent.AddComponent(gameObject, _cardPropities._cardAbility);
+        CheckTauntCard();
     }
 
     private void ResetTime() => _elapsedTime = 0;
@@ -44,15 +48,35 @@ public class CardFightEventTrigger : MonoBehaviour, IDragHandler, IEndDragHandle
 
         if(Physics.Raycast(transform.position, Vector3.down, out hit))
         {
+            var player = hit.transform.GetComponent<Player>();
+            var card = hit.transform.GetComponent<CardFightEventTrigger>();
+
             if (hit.transform.CompareTag(_enemyPlayer.tag))
             {
-                if (hit.transform.GetComponent<CardPropities>())
+                if (card != null && card._AttackResistance == false)
                 {
-                    AttackEnemy(hit.transform.gameObject);
+                    if (hit.transform.GetComponent<CardPropities>())
+                    {
+                        AttackEnemy(hit.transform.gameObject);                   
+                    }                   
                 }
-                else if(hit.transform.GetComponent<Player>())
+                else if(player != null && player._AttackResistance == false)
                 {
-                    AttackEnemy(hit.transform.gameObject);
+                    if (hit.transform.GetComponent<Player>())
+                    {
+                        AttackEnemy(hit.transform.gameObject);
+                    }
+                }
+                else if(card != null && card._AttackResistance != true)
+                {
+                    if(hit.transform.GetComponent<Taunt>())
+                    {
+                        AttackEnemy(hit.transform.gameObject);
+                    }                                        
+                }
+                else 
+                { 
+                    StartCoroutine(MoveToPoint(null)); 
                 }
             }
             else
@@ -129,5 +153,21 @@ public class CardFightEventTrigger : MonoBehaviour, IDragHandler, IEndDragHandle
     public void CardCanAttack()
     {
         _isReady = true;
+    }
+
+    private void CheckTauntCard()
+    {
+        foreach (var card in _currectPlayer.CardsOnTable)
+        {
+            if(card == this.gameObject)
+            {
+                continue;
+            }
+
+            if (!card.GetComponent<Taunt>())
+            {
+                _AttackResistance = true;              
+            }
+        }
     }
 }

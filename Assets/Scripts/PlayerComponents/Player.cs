@@ -27,7 +27,9 @@ public class Player : MonoBehaviour
     [Inject] private SelectStarterCards _startCards;
 
     ChangeColor _color;
+    [SerializeField] public bool _AttackResistance = false;
     private bool _isPlayed = true;
+    
 
     private void Start()
     {
@@ -82,7 +84,8 @@ public class Player : MonoBehaviour
     {
         if (_cardsInStock.Count != 0)
         {
-            var card = _cardsInStock[0].gameObject;
+            int rand = Random.Range(0, _cardsInStock.Count);
+            var card = _cardsInStock[rand].gameObject;
             _cardsInHand.Add(card);
             RemoveCard(card);
         }
@@ -162,6 +165,8 @@ public class Player : MonoBehaviour
         }
        
         ShowOrHideCard(true);
+        _cardInHand.gameObject.GetComponent<CardEventTrigger>().enabled = false;
+        _cardInHand.gameObject.GetComponent<CardEventTrigger>().enabled = true;
         _cardInHand.gameObject.GetComponent<CardScaleTrigger>().enabled = true;
     }
 

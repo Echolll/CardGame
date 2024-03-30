@@ -22,7 +22,7 @@ public class CardCost : MonoBehaviour
 
    public bool SpendPoints()
    {
-        if (_currectPlayer.MagicPoint > 0)
+        if (_currectPlayer.MagicPoint >= _card._cardCost)
         {
             _currectPlayer.MagicPoint -= _card._cardCost;
             _currectPlayer.RemoveCardInHand(this.gameObject);

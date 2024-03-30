@@ -1104,10 +1104,10 @@ MonoBehaviour:
   _cardCost: 4
   _cardDamage: 2
   _cardHealth: 4
-  _cardAbility: 2
+  _cardAbility: 0
   _cardName: Gnomish Inventor
   _cardType: None
-  _cardDescription: 'Battlecry: Draw a card.'
+  _cardDescription: 
   _cardTexture: {fileID: 2800000, guid: 9ee6a53b5e7075743bd6cdb7d8b9729a, type: 3}
   _cost: {fileID: 5095447929130972581}
   _damage: {fileID: 9150582693042701014}
